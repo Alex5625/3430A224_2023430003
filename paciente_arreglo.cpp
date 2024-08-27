@@ -7,7 +7,7 @@ using namespace std;
 struct Paciente {
     string nombre;
     int edad;
-    double altura;
+    int altura;
     double peso;
 };
 
