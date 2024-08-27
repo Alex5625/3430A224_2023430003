@@ -24,6 +24,10 @@ void añadirPaciente(Paciente*& head, const string& nombre, int edad, int altura
     head = nuevoPaciente;
 }
 
+
+
+
+//Funcion para imprimir pacientes
 void imprimirPacientes(const Paciente* head){
 
     const Paciente* actual = head;
@@ -37,15 +41,29 @@ void imprimirPacientes(const Paciente* head){
     }
 }
 
+//Funcion elminar pacientes
+void eliminarPaciente(Paciente*& head, const string& nombre){
 
-/*void printPeople(const Person* head) {
-    const Person* current = head;
-    while (current != nullptr) {
-        std::cout << current->name << " is " << current->age << " years old." << std::endl;
-        current = current->next;
+    Paciente* actual = head;
+    Paciente* anterior = nullptr;
+
+    while (actual != nullptr && actual -> nombre != nombre){
+        anterior = actual;
+        actual = actual -> next;
+    }
+
+    if(actual != nullptr){
+        if(anterior == nullptr){
+            head = actual -> next;
+        } else {
+            anterior -> next = actual -> next;
+        }
+        delete actual;
+
     }
 }
-*/
+
+
 int main(){
     Paciente* head = nullptr;
 
@@ -56,5 +74,14 @@ int main(){
 
 
     imprimirPacientes(head);
+
+    eliminarPaciente(head, "ola");
+
+    cout << "------------------\n";
+
+    imprimirPacientes(head);
+
+
+    return 0;
 }
 
