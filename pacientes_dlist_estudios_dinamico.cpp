@@ -14,6 +14,7 @@ struct Paciente {
     int edad;
     double altura;
     double peso;
+
     Paciente* next;
 };
 
@@ -122,7 +123,6 @@ void imcPacientes(Paciente*& head){
     }
 
 }
-
 
 void leerCSV(Paciente*& head, const string& nombreArchivo){
 
