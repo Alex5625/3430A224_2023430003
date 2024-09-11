@@ -55,10 +55,11 @@ int main() {
 
     char eleccion;
     int dato;
-    while(true){
+    while(eleccion != '4'){
         cout << "Agregar/push [1]" << endl;
         cout << "Remover/pop [2]" << endl;
-        cout << "ver pila [3]" << endl;
+        cout << "Ver pila [3]" << endl;
+        cout << "Salir [4]" << endl;
         cout << "----------------" << endl;
         cout << "Opcion: ";
         cin >> eleccion;
@@ -84,6 +85,8 @@ int main() {
                 imprimir_datos(pila);
                 break;
 
+            case '4':
+                cout << "Saliendo del Programa" << endl;
             default:
                 cout << "Opcion no valida, intentelo de nuevo";
                 continue;
