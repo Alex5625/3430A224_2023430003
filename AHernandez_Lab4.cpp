@@ -221,7 +221,7 @@ int main() {
         cout << "7. Eliminar un numero\n";
         cout << "8. Salir\n";
         cout << "Ingrese su opción: ";
-        while(!(cin >> numero)) {  // Mientras la entrada no sea válida
+        while(!(cin >> opcion)) {  // Mientras la entrada no sea válida
             cout << "Error: No es un número válido. Intenta de nuevo: ";
             cin.clear();  // Limpia el estado de error
             cin.ignore(10000, '\n');
