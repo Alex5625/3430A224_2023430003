@@ -190,8 +190,8 @@ void Equilibrar(Arbol* a, pNodo nodo, int rama, int nuevo) {
             } else {
                 nodo->FE += 1;
             }
-        }
-        else{
+        } else{
+
             if (rama == IZQUIERDO){
                 nodo->FE += 1;
             }
@@ -232,11 +232,15 @@ void GenerarGrafo(Arbol ArbolInt) {
     ofstream fp("grafo.txt");
 
     fp << "digraph G {\n";
-    fp << "node [style=filled fillcolor=yellow];\n";
+    fp << "node [style=filled fillcolor=sienna];\n";
 
-    fp << "nullraiz [shape=point];\n";
-    fp << "nullraiz->" << ArbolInt->dato << " [label=" << ArbolInt->FE << "];\n";
-    PreOrden(ArbolInt, fp);
+    if (ArbolInt) {
+        fp << "nullraiz [shape=point];\n";
+        fp << "nullraiz->" << ArbolInt->dato << " [label=" << ArbolInt->FE << "];\n";
+        PreOrden(ArbolInt, fp);
+    } else {
+        cout << "El árbol está vacío. No se puede generar el gráfico.\n";
+    }
 
     fp << "}\n";
     fp.close();
@@ -245,21 +249,36 @@ void GenerarGrafo(Arbol ArbolInt) {
     system("eog grafo.png &");
 }
 
-
 void PreOrden(Arbol a, ofstream &fp) {
+    static int nullCount = 0;  // Para numerar los nodos nulos
+
     if (a) {
-        fp << a->dato << ";\n";
+        // Escribir el nodo actual
+        fp << a->dato << " [style=filled fillcolor=turquoise];\n";
+
+        // Si el hijo izquierdo existe, agregar la arista
         if (a->izquierdo) {
-            fp << a->dato << "->" << a->izquierdo->dato << ";\n";
+            fp << a->dato << "->" << a->izquierdo->dato << " [label=" << a->izquierdo->FE << "];\n";
             PreOrden(a->izquierdo, fp);
+        } else {
+            // Si no existe, agregar un nodo nulo
+            fp << "null" << nullCount << " [shape=point];\n";
+            fp << a->dato << "->null" << nullCount << ";\n";
+            nullCount++;
         }
+
+        // Si el hijo derecho existe, agregar la arista
         if (a->derecho) {
-            fp << a->dato << "->" << a->derecho->dato << ";\n";
+            fp << a->dato << "->" << a->derecho->dato << " [label=" << a->derecho->FE << "];\n";
             PreOrden(a->derecho, fp);
+        } else {
+            // Si no existe, agregar un nodo nulo
+            fp << "null" << nullCount << " [shape=point];\n";
+            fp << a->dato << "->null" << nullCount << ";\n";
+            nullCount++;
         }
     }
 }
-
 
 
 
@@ -386,6 +405,78 @@ void Eliminar(Arbol* a, int dato){
     Equilibrar(a, padre, (padre != nullptr && padre -> izquierdo == actual) ? IZQUIERDO : DERECHO, FALSE);
 }
 
+
+// Función para validar que la entrada del usuario sea un entero
+int obtenerNumeroValido(const string& mensaje) {
+    string ingreso_usuario;
+    bool valid = false;
+    int numero = 0;
+
+    while (!valid) {
+        cout << mensaje;
+        cin >> ingreso_usuario;
+
+        try {
+            numero = stoi(ingreso_usuario);  // Intenta convertir la entrada a un entero
+            valid = true;  // Si la conversión es exitosa, salimos del bucle
+        }
+        catch (const invalid_argument& e) {
+            cout << "Entrada inválida, por favor ingresa un número entero válido.\n";
+        }
+        catch (const out_of_range& e) {
+            cout << "Número fuera de rango, intenta de nuevo.\n";
+        }
+    }
+
+    return numero;  // Devuelve el número entero validado
+}
+
+
+void Modificar(pNodo* a, int numero){
+    int numero_agregar;
+    pNodo actual = *a;
+
+    //Buscar el nodo correspondiente al numero ingresado
+    while (actual != nullptr && numero != actual -> dato){
+        if (numero < actual -> dato){
+            actual = actual -> izquierdo;
+        } else {
+            actual = actual -> derecho;
+        }
+    }
+
+    //si no se encuentra el dato se cierra el procedimiento
+    if (actual == nullptr){
+        return;
+    }
+
+    cout << "Dame el numero que quieres agregar: ";
+    while(!(cin >> numero_agregar)) {  // Mientras la entrada no sea válida
+        cout << "Error: No es un número válido.\nIntenta de nuevo: ";
+        cin.clear();  // Limpia el estado de error
+        cin.ignore(10000, '\n');
+    }
+
+    // Guardar el viejo dato
+    int viejoDato = actual->dato;
+
+    // Modificar el dato
+    actual->dato = numero_agregar;
+
+    // Verificar si se mantiene la propiedad del arbol binario
+    if ((actual->izquierdo != nullptr && numero_agregar < actual->izquierdo->dato) ||
+        (actual->derecho != nullptr && numero_agregar > actual->derecho->dato)) {
+        cout << "El nuevo número no cumple con las propiedades del árbol." << endl;
+        // Restaurar el viejo dato si es necesario
+        actual->dato = viejoDato;
+        return;
+    }
+
+    actual -> dato = numero_agregar;
+
+}
+
+
 int Buscar(pNodo root, int numero) {
 
     if (root == nullptr) {
@@ -401,6 +492,7 @@ int Buscar(pNodo root, int numero) {
     }
 
 }
+
 
 void MenuPrincipal() {
     cout << "\n";
@@ -421,33 +513,48 @@ int main() {
     while (opcion != 6) {
         MenuPrincipal();
         cout << "Ingrese su opcion: ";
-        cin >> opcion;
+        while(!(cin >> opcion)) {  // Mientras la entrada no sea válida
+            cout << "Error: No es un número válido.\nIntenta de nuevo: ";
+            cin.clear();  // Limpia el estado de error
+            cin.ignore(10000, '\n');
+        }
 
         switch (opcion) {
             case 1:
                 cout << "Ingrese un numero para añadir: ";
-                cin >> valor;
+                while(!(cin >> valor)) {  // Mientras la entrada no sea válida
+                    cout << "Error: No es un número válido.\nIntenta de nuevo: ";
+                    cin.clear();  // Limpia el estado de error
+                    cin.ignore(10000, '\n');
+                }
                 Insertar(&ArbolInt, valor);
                 break;
             case 2:
                 cout << "Ingrese un numero para buscar: ";
-                cin >> valor;
+                while(!(cin >> valor)) {  // Mientras la entrada no sea válida
+                    cout << "Error: No es un número válido.\nIntenta de nuevo: ";
+                    cin.clear();  // Limpia el estado de error
+                    cin.ignore(10000, '\n');
+                }
                 Buscar(ArbolInt, valor);
                 break;
             case 3:
                 cout << "Ingrese un numero para eliminar: ";
-                cin >> valor;
+                while(!(cin >> valor)) {  // Mientras la entrada no sea válida
+                    cout << "Error: No es un número válido.\nIntenta de nuevo: ";
+                    cin.clear();  // Limpia el estado de error
+                    cin.ignore(10000, '\n');
+                }
                 Eliminar(&ArbolInt, valor);
                 break;
             case 4:
-                //Esta funcion de MODIFICAR no esta correcta, proximamente se va a arreglar, ya que lo que se debe hacer es intercambiar un numero por otro.
                 cout << "Ingresa un numero para eliminar: ";
-                cin >> valor;
-                Eliminar(&ArbolInt, valor);
-                cin.clear();
-                cout << "Ingresa un numero para agregar: ";
-                cin >> valor;
-                Insertar(&ArbolInt, valor);
+                while(!(cin >> valor)) {  // Mientras la entrada no sea válida
+                    cout << "Error: No es un número válido.\nIntenta de nuevo: ";
+                    cin.clear();  // Limpia el estado de error
+                    cin.ignore(10000, '\n');
+                }
+                Modificar(&ArbolInt, valor);
                 break;
             case 5:
                 GenerarGrafo(ArbolInt);
