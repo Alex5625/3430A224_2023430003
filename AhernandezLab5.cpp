@@ -22,30 +22,6 @@ struct Nodo {
 typedef Nodo* pNodo;
 typedef Nodo* Arbol;
 
-
-
-/* Comprobar si es un nodo hoja: */
-int EsHoja(pNodo r); //buscar que el puntero izq y derecho este vacio
-/* Contar numero de nodos: */
-
-/* Calcular la altura de un arbol: */
-int AlturaArbol(Arbol a, int* altura);
-/* Calcular altura de un dato: */
-int Altura(Arbol a, int dat);
-/* Generar salida para Graphiz */
-void PreOrden(Arbol, ofstream &fp);
-
-int NumeroNodos(Arbol a, int* c);
-
-/* Funciones auxiliares: */
-void Podar(Arbol* a);
-
-void auxContador(Arbol a, int*);
-
-//Calcular la altura que posee el arbol del lado izquierdo de la raiz y el lado derecho de la raiz
-void auxAltura(Arbol a, int, int*);
-
-
 void RotaIzquierdaDerecha(Arbol* raiz, pNodo nodo) {
     pNodo Padre = nodo->padre;
     pNodo P = nodo;
