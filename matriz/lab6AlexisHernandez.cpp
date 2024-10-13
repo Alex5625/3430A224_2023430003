@@ -10,6 +10,7 @@
 
 using namespace std;
 
+//funcion para leer nodos y darles letras del alfabeto
 void leer_nodos(string *vector, int n){
     int inicio = 97;
     for (int i = 0; i < n; i++) {
@@ -17,16 +18,17 @@ void leer_nodos(string *vector, int n){
     }
 };
 
-// inicializa un vector. recibe el vector como un puntero.
+// inicializa un vector de caracteres con espacios vacios
 void inicializar_vector_caracter (string *vector, int n) {
     int col;
 
     // recorre el vector.
     for (col=0; col<n; col++) {
-        vector[col] = ' ';
+        vector[col] = " ";
     }
 }
 
+//incializa un vector D con los valores de la primera fila de la matriz
 void inicializar_vector_D(int *D, int **matriz, int n){
     int col;
 
@@ -35,7 +37,7 @@ void inicializar_vector_D(int *D, int **matriz, int n){
     }
 }
 
-// imprime un vector. recibe el vector como un puntero.//a,b,c,b???
+// imprime los elementos del vector de caracteres
 void imprimir_vector_caracter(string *vector, int n) {
     cout << endl;
     for (int i=0; i<n; i++) {
@@ -44,6 +46,7 @@ void imprimir_vector_caracter(string *vector, int n) {
     cout << endl;
 }
 
+//busca un caracter en el vector y devuelve TRUE si lo encuentra
 int busca_caracter(string c, string *vector, int n) {
     for (int j = 0; j < n; j++) {
         if (c == vector[j]) {
@@ -52,6 +55,8 @@ int busca_caracter(string c, string *vector, int n) {
     }
     return FALSE;
 };
+
+//actualiza el vector VS con los nodos que no estan en S
 void actualizar_VS(string *V, string *S, string *VS, int n){
     int k = 0;
     inicializar_vector_caracter(VS, n);
@@ -63,6 +68,8 @@ void actualizar_VS(string *V, string *S, string *VS, int n){
         }
     }
 };
+
+//busca el indice de un caracter en el vector V
 int buscar_indice_caracter(string *V, string caracter, int n){
     int i = 0;
     for (i = 0; i < n; i++) {
@@ -71,6 +78,8 @@ int buscar_indice_caracter(string *V, string caracter, int n){
     }
     return i;
 };
+
+//agrega un vertice a S cuando hay espacio vacio
 void agrega_vertice_a_S(string *S, string vertice, int n){
     for (int i = 0; i < n; i++) {
         if (S[i] == " " ) {
@@ -79,6 +88,8 @@ void agrega_vertice_a_S(string *S, string vertice, int n){
         }
     }
 };
+
+//Elige el vertice con el menor peso de VS y lo retorna
 string elegir_vertice(string *VS, int *D, string *V, int n){
     int menor = -1;
     int peso;
@@ -100,6 +111,7 @@ string elegir_vertice(string *VS, int *D, string *V, int n){
     return vertice;
 };
 
+//calcula el minimo entre tres valores y retorna el mas bajo
 int calcular_minimo(int dw, int dv, int mvw){
     int min;
 
@@ -124,6 +136,7 @@ int calcular_minimo(int dw, int dv, int mvw){
     return min;
 };
 
+//actualiza los pesos en D segun los vertices visitados y la matriz de adyacencia
 void actualizar_pesos(int *D, string *VS, int **matriz, string *V, string v, int n){
     int indice_w, indice_v;
     cout << "\n> actualiza pesos en D[]\n";
@@ -137,12 +150,15 @@ void actualizar_pesos(int *D, string *VS, int **matriz, string *V, string v, int
     }
 };
 
+//imprime los elementos del vector D que contiene distancias minimas
 void imprimir_vector_entero(int *vector, int n){
     for (int i = 0; i < n; i++) {
         cout << "D[" << i << "]: " << vector[i] << " ";
     }
     cout << endl;
 };
+
+//imprime la matriz de adyacencia completa con sus pesos respectivos
 void imprimir_matriz(int **matriz, int n){
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -152,6 +168,7 @@ void imprimir_matriz(int **matriz, int n){
     }
 };
 
+//modifica los pesos de la matriz segun las entradas del usuario
 void modificar_pesos_matriz(int **matriz, int n){
     string respuesta;
     int numero;
@@ -174,7 +191,7 @@ void modificar_pesos_matriz(int **matriz, int n){
     }
 }
 
-
+//implementa el algoritmo de dijkstra para encontrar los caminos mas cortos del grafo
 void aplicar_dijkstra(string *V, string *S, string *VS, int *D, int **matriz, int n){
     int i;
     string v;
@@ -216,6 +233,7 @@ void aplicar_dijkstra(string *V, string *S, string *VS, int *D, int **matriz, in
     }
 };
 
+//imprime un grafo en formato DOT para generar la visualizacion
 void imprimir_grafo(int **matriz, string *vector, int n){
     ofstream fp("matriz.txt");
 
@@ -238,7 +256,7 @@ void imprimir_grafo(int **matriz, string *vector, int n){
     system("eog grafo.png &");
 }
 
-// inicializa matriz nxn. recibe puntero a la matriz.
+//inicializa la matriz nxn con -1 para indicar que no tiene conexiones
 void inicializar_matriz_enteros (int **matriz, int n) {
     for (int fila=0; fila<n; fila++) {
         for (int col=0; col<n; col++) {
@@ -247,6 +265,7 @@ void inicializar_matriz_enteros (int **matriz, int n) {
     }
 }
 
+//imprime el contenido del vector D que representa distancias minimas
 void imprimir_camino(int *D, int n){
 
     cout << "El vector D es: ";
@@ -260,15 +279,19 @@ int main(int argc, char **argv) {
     int n;
 
     // verificar que se pasaron suficientes argumentos
-    if (argc < 3) {
-        cout << "Por consola ingresa un numero mayor que dos!!" << endl;
+    if (argc < 2) {
+        cout << "Por consola ingresa un numero mayor que dos!!\n vuelve a usar " << argv[0] << " <numero de elementos>" << endl;
         return -1;
     }
 
 
     // convierte string a entero.
     n = atoi(argv[1]);
-
+    // valida cantidad de parámetros mínimos.
+    if (n < 3) {
+        cout << "Valor no valido, vuelve a intentarlo." << endl;
+        return -1;
+    }
 
     //inicializar_vector_caracter con las tres char
     string V[n], S[n], VS[n];
