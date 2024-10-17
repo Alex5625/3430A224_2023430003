@@ -6,16 +6,16 @@ using namespace std;
 
 class Grafo {
 private:
-    int n; // número de nodos
+    int n; // numero de nodos
     int** matriz; // Matriz de adyacencia
-    int* padre; // Para almacenar el árbol de expansión mínima
-    int* llave; // Llaves utilizadas para seleccionar la arista de menor peso
-    bool* nodos_encontrados; // Conjunto de nodos incluidos en el MST
+    int* padre;
+    int* llave; //Donde se almacenan las aristas con menor peso
+    bool* nodos_encontrados; // Decide si esa posicion ya se reviso o no.
 
 public:
     // Constructor que inicializa la matriz de adyacencia y otros arrays
-    Grafo(int n) {
-        this->n = n;
+    Grafo(int num_nodos) {
+        n = num_nodos;
         matriz = new int*[n];
 
         //incializar matriz con -1 para que se muestre que no hay conexiones
@@ -46,7 +46,7 @@ public:
         delete[] nodos_encontrados;
     }
 
-    // Método para leer la matriz de adyacencia desde la terminal
+    // metodo para leer y anadir los pesos dentro de la matriz de adyacencia
     void leerMatriz() {
         string respuesta;
         int numero;
@@ -85,7 +85,6 @@ public:
         return min_index;
     }
 
-    // Implementación del algoritmo de Prim
     void aplicarPrim() {
         llave[0] = 0; // Inicializar la primera llave
         padre[0] = -1; // El primer nodo no tiene padre
@@ -103,16 +102,16 @@ public:
         }
     }
 //------------------------------------algoritmo de prim----------------------------------------------
-    // Método para imprimir las conexiones del MST
+    // metodo para imprimir las conexiones del grafo
     void imprimirMatriz() {
-        cout << "\nConexiones del Árbol de Expansión Mínima:\n";
+        cout << "\nConexiones del Árbol:\n";
         for (int i = 1; i < n; i++) {
             cout << char('A' + padre[i]) << " - " << char('A' + i) << " con peso " << matriz[i][padre[i]] << "\n";
         }
     }
 
-    // Método para generar el archivo .dot para Graphviz
-    void generarGraphviz(const string& filename, bool arbol_minimo = false) {
+    // metodo para generar el archivo y poder ser visualizado
+    void generarGrafo(const string& filename, bool arbol_minimo = false) {
         ofstream archivo(filename);
         if (!archivo.is_open()) {
             cout << "no se pudo abrir el archivo.\n";
@@ -167,8 +166,8 @@ int main(int argc, char** argv) {
     grafo.aplicarPrim();
 
     // Generar los dos grafos, el original y el MST
-    grafo.generarGraphviz("grafo_original.txt");
-    grafo.generarGraphviz("grafo_costo_minimo.txt", true);
+    grafo.generarGrafo("grafo_original.txt");
+    grafo.generarGrafo("grafo_costo_minimo.txt", true);
 
     // Imprimir las conexiones del MST
     grafo.imprimirMatriz();
