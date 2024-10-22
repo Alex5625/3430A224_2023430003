@@ -215,7 +215,7 @@ void GenerarGrafo(Arbol ArbolInt) {
         fp << "nullraiz->" << ArbolInt->dato << " [label=" << ArbolInt->FE << "];\n";
         PreOrden(ArbolInt, fp);
     } else {
-        cout << "El árbol está vacío. No se puede generar el gráfico.\n";
+        cout << "El arbol esta vacao. No se puede generar el grafico.\n";
     }
 
     fp << "}\n";
@@ -382,7 +382,7 @@ void Eliminar(Arbol* a, int dato){
 }
 
 
-// Función para validar que la entrada del usuario sea un entero
+// Funcian para validar que la entrada del usuario sea un entero
 int obtenerNumeroValido(const string& mensaje) {
     string ingreso_usuario;
     bool valid = false;
@@ -394,17 +394,17 @@ int obtenerNumeroValido(const string& mensaje) {
 
         try {
             numero = stoi(ingreso_usuario);  // Intenta convertir la entrada a un entero
-            valid = true;  // Si la conversión es exitosa, salimos del bucle
+            valid = true;  // Si la conversian es exitosa, salimos del bucle
         }
         catch (const invalid_argument& e) {
-            cout << "Entrada inválida, por favor ingresa un número entero válido.\n";
+            cout << "Entrada invalida, por favor ingresa un namero entero valido.\n";
         }
         catch (const out_of_range& e) {
-            cout << "Número fuera de rango, intenta de nuevo.\n";
+            cout << "Namero fuera de rango, intenta de nuevo.\n";
         }
     }
 
-    return numero;  // Devuelve el número entero validado
+    return numero;  // Devuelve el namero entero validado
 }
 
 
@@ -427,8 +427,8 @@ void Modificar(pNodo* a, int numero){
     }
 
     cout << "Dame el numero que quieres agregar: ";
-    while(!(cin >> numero_agregar)) {  // Mientras la entrada no sea válida
-        cout << "Error: No es un número válido.\nIntenta de nuevo: ";
+    while(!(cin >> numero_agregar)) {  // Mientras la entrada no sea valida
+        cout << "Error: No es un namero valido.\nIntenta de nuevo: ";
         cin.clear();  // Limpia el estado de error
         cin.ignore(10000, '\n');
     }
@@ -442,7 +442,7 @@ void Modificar(pNodo* a, int numero){
     // Verificar si se mantiene la propiedad del arbol binario
     if ((actual->izquierdo != nullptr && numero_agregar < actual->izquierdo->dato) ||
         (actual->derecho != nullptr && numero_agregar > actual->derecho->dato)) {
-        cout << "El nuevo número no cumple con las propiedades del árbol." << endl;
+        cout << "El nuevo namero no cumple con las propiedades del arbol." << endl;
         // Restaurar el viejo dato si es necesario
         actual->dato = viejoDato;
         return;
@@ -489,8 +489,8 @@ int main() {
     while (opcion != 6) {
         MenuPrincipal();
         cout << "Ingrese su opcion: ";
-        while(!(cin >> opcion)) {  // Mientras la entrada no sea válida
-            cout << "Error: No es un número válido.\nIntenta de nuevo: ";
+        while(!(cin >> opcion)) {  // Mientras la entrada no sea valida
+            cout << "Error: No es un namero valido.\nIntenta de nuevo: ";
             cin.clear();  // Limpia el estado de error
             cin.ignore(10000, '\n');
         }
@@ -498,8 +498,8 @@ int main() {
         switch (opcion) {
             case 1:
                 cout << "Ingrese un numero para añadir: ";
-                while(!(cin >> valor)) {  // Mientras la entrada no sea válida
-                    cout << "Error: No es un número válido.\nIntenta de nuevo: ";
+                while(!(cin >> valor)) {  // Mientras la entrada no sea valida
+                    cout << "Error: No es un namero valido.\nIntenta de nuevo: ";
                     cin.clear();  // Limpia el estado de error
                     cin.ignore(10000, '\n');
                 }
@@ -507,8 +507,8 @@ int main() {
                 break;
             case 2:
                 cout << "Ingrese un numero para buscar: ";
-                while(!(cin >> valor)) {  // Mientras la entrada no sea válida
-                    cout << "Error: No es un número válido.\nIntenta de nuevo: ";
+                while(!(cin >> valor)) {  // Mientras la entrada no sea valida
+                    cout << "Error: No es un namero valido.\nIntenta de nuevo: ";
                     cin.clear();  // Limpia el estado de error
                     cin.ignore(10000, '\n');
                 }
@@ -516,8 +516,8 @@ int main() {
                 break;
             case 3:
                 cout << "Ingrese un numero para eliminar: ";
-                while(!(cin >> valor)) {  // Mientras la entrada no sea válida
-                    cout << "Error: No es un número válido.\nIntenta de nuevo: ";
+                while(!(cin >> valor)) {  // Mientras la entrada no sea valida
+                    cout << "Error: No es un namero valido.\nIntenta de nuevo: ";
                     cin.clear();  // Limpia el estado de error
                     cin.ignore(10000, '\n');
                 }
@@ -525,8 +525,8 @@ int main() {
                 break;
             case 4:
                 cout << "Ingresa un numero para eliminar: ";
-                while(!(cin >> valor)) {  // Mientras la entrada no sea válida
-                    cout << "Error: No es un número válido.\nIntenta de nuevo: ";
+                while(!(cin >> valor)) {  // Mientras la entrada no sea valida
+                    cout << "Error: No es un namero valido.\nIntenta de nuevo: ";
                     cin.clear();  // Limpia el estado de error
                     cin.ignore(10000, '\n');
                 }
