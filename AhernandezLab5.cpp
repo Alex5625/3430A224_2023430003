@@ -204,27 +204,6 @@ void Equilibrar(Arbol* a, pNodo nodo, int rama, int nuevo) {
     }
 }
 
-void GenerarGrafo(Arbol ArbolInt) {
-    ofstream fp("grafo.txt");
-
-    fp << "digraph G {\n";
-    fp << "node [style=filled fillcolor=sienna];\n";
-
-    if (ArbolInt) {
-        fp << "nullraiz [shape=point];\n";
-        fp << "nullraiz->" << ArbolInt->dato << " [label=" << ArbolInt->FE << "];\n";
-        PreOrden(ArbolInt, fp);
-    } else {
-        cout << "El arbol esta vacao. No se puede generar el grafico.\n";
-    }
-
-    fp << "}\n";
-    fp.close();
-
-    system("dot -Tpng -ografo.png grafo.txt");
-    system("eog grafo.png &");
-}
-
 void PreOrden(Arbol a, ofstream &fp) {
     static int nullCount = 0;  // Para numerar los nodos nulos
 
@@ -254,6 +233,27 @@ void PreOrden(Arbol a, ofstream &fp) {
             nullCount++;
         }
     }
+}
+
+void GenerarGrafo(Arbol ArbolInt) {
+    ofstream fp("grafo.txt");
+
+    fp << "digraph G {\n";
+    fp << "node [style=filled fillcolor=sienna];\n";
+
+    if (ArbolInt) {
+        fp << "nullraiz [shape=point];\n";
+        fp << "nullraiz->" << ArbolInt->dato << " [label=" << ArbolInt->FE << "];\n";
+        PreOrden(ArbolInt, fp);
+    } else {
+        cout << "El arbol esta vacao. No se puede generar el grafico.\n";
+    }
+
+    fp << "}\n";
+    fp.close();
+
+    system("dot -Tpng -ografo.png grafo.txt");
+    system("eog grafo.png &");
 }
 
 
