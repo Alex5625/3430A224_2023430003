@@ -77,21 +77,33 @@ void colisiones(int numero, int *arreglo, int indice, int tamaño, char caracter
         }
         arreglo[indice] = numero;
     } else if (caracter == 'c') { // Prueba cuadrática
-        int j = 1;
+        int j = 1; // Comenzar en 1 porque j = 0 siempre devolvería el mismo índice
         while (arreglo[indice] != -1 && j < tamaño) {
-            indice = (indice + j * j) % tamaño;
+            cout << "NO SE LOGRO INSERTAR EN EL INDICE: " << indice << endl;
+
+            indice = (indice + j * j) % tamaño; // Prueba cuadrática
+
             j++;
         }
-        arreglo[indice] = numero;
+        if (arreglo[indice] == -1) {
+            arreglo[indice] = numero;
+        } else {
+            cout << "No se pudo insertar el numero: " << numero << " - Arreglo lleno o no se encontro espacio." << endl;
+        }
     } else if (caracter == 'd') { // Doble direccionamiento
         int j = 1;
         while (arreglo[indice] != -1 && j < tamaño) {
             indice = (indice + H_nueva(numero, numero_primo) * j) % tamaño;
             j++;
         }
-        arreglo[indice] = numero;
+        if (arreglo[indice] == -1) {
+            arreglo[indice] = numero;
+        } else {
+            cout << "No se pudo insertar el numero: " << numero << " - Arreglo lleno o no se encontro espacio." << endl;
+        }
     }
 }
+
 
 // Función para ingresar un número en el arreglo
 void ingresa_numero_arreglo(int numero, int *arreglo, int indice, int tamaño, char caracter, int numero_primo) {
