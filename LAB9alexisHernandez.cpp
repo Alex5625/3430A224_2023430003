@@ -68,6 +68,7 @@ int H_nueva(int K, int numero_primo) {
 
 // Función para manejar colisiones
 void colisiones(int numero, int *arreglo, int indice, int tamaño, char caracter, int numero_primo) {
+
     if (caracter == 'l') { // Prueba lineal
         while (arreglo[indice] != -1 && indice < tamaño) {
             indice++;
@@ -75,35 +76,40 @@ void colisiones(int numero, int *arreglo, int indice, int tamaño, char caracter
                 indice = 0;
             }
         }
+
         arreglo[indice] = numero;
     } else if (caracter == 'c') { // Prueba cuadrática
-        int j = 1; // Comenzar en 1 porque j = 0 siempre devolvería el mismo índice
-        while (arreglo[indice] != -1 && j < tamaño) {
-            cout << "NO SE LOGRO INSERTAR EN EL INDICE: " << indice << endl;
 
-            indice = (indice + j * j) % tamaño; // Prueba cuadrática
+        int j = 0;
+        while (arreglo[indice] != -1 && j < tamaño) {
+            cout << "NO SE LOGRO INSERTAR EN EL INDICE" << endl;
+
+            indice = (arreglo[indice] + j * j) % tamaño;
+
+            cout << "---------------------------" << endl;
+            cout << "el indice es: " << indice <<endl;
+            cout << "---------------------------" << endl;
 
             j++;
         }
-        if (arreglo[indice] == -1) {
-            arreglo[indice] = numero;
-        } else {
-            cout << "No se pudo insertar el numero: " << numero << " - Arreglo lleno o no se encontro espacio." << endl;
-        }
+        arreglo[indice] = numero;
+        cout << "PASA AL SIGUIENTE NUMERO" << endl;
     } else if (caracter == 'd') { // Doble direccionamiento
         int j = 1;
-        while (arreglo[indice] != -1 && j < tamaño) {
+        while (arreglo[indice] != -1) {
+            cout << "NO SE LOGRO INSERTAR EN EL INDICE" << endl;
+
             indice = (indice + H_nueva(numero, numero_primo) * j) % tamaño;
+
+            cout << "---------------------------" << endl;
+            cout << "el indice es: " << indice <<endl;
+            cout << "---------------------------" << endl;
+
             j++;
         }
-        if (arreglo[indice] == -1) {
-            arreglo[indice] = numero;
-        } else {
-            cout << "No se pudo insertar el numero: " << numero << " - Arreglo lleno o no se encontro espacio." << endl;
-        }
+        arreglo[indice] = numero;
     }
 }
-
 
 // Función para ingresar un número en el arreglo
 void ingresa_numero_arreglo(int numero, int *arreglo, int indice, int tamaño, char caracter, int numero_primo) {
