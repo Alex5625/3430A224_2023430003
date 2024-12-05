@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
         cout << "Por favor, ingrese los 2 parametros correspondientes como argumento.\n";
         return 1;
     }
-    const double SIZE = atod(argv[1]); // TAMANO DEL ARREGLO
+    const int SIZE = stoi(argv[1]); // TAMANO DEL ARREGLO
 
     char caracter = argv[2][0]; // VERIFICACION DE MOSTRAR LOS ARREGLOS O NO
     if (caracter != 'n' && caracter != 's'){
